@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Doble Cero Avanzamento</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* layout: una colonna, tre sezioni (approvato · da valutare · scartato), barra fissa in basso */
+:root{color-scheme:dark;--k:#0B0B0B;--card:#15121C;--li:#C6F432;--h:#EEE8FA;--mu:#8C7FB0;--ln:#2A2340;--ok:#3DF5A0;--no:#FF3B4E;--font-display:'Anton',Impact,sans-serif;--font-mono:'IBM Plex Mono',Menlo,monospace}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--k);color:var(--h);font-family:var(--font-mono);font-weight:500;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.nm{font-family:var(--font-display);text-transform:uppercase;line-height:.92;font-weight:400;text-wrap:balance}
+.mono{letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(11,11,11,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln)}
+nav .wrap{padding-block:12px;display:flex;align-items:center;gap:14px}
+nav img{height:32px}
+nav .tabs{margin-left:auto;display:flex;gap:4px}
+nav .tabs a{text-decoration:none;color:var(--mu);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 10px;border-radius:4px;border:1px solid transparent;transition:.2s}
+nav .tabs a:hover{color:var(--h);border-color:var(--ln)}
+header{position:relative;overflow:hidden;border-bottom:2px solid var(--li)}
+header .bg{position:absolute;inset:0;background:url(brand_girih_tile.svg) 0 0/110px repeat}
+header .fade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,11,.3),rgba(11,11,11,.94) 70%,var(--k))}
+header .wrap{position:relative;padding-block:70px 40px}
+header h1{font-size:clamp(52px,9vw,110px);margin:0 0 14px;color:#fff}
+header h1 span{color:var(--li)}
+header p{max-width:560px;color:var(--h);margin:0;font-size:15px}
+header p b{font-weight:700}
+.sec{padding-block:44px 10px}
+.sec h2{display:flex;align-items:center;gap:14px;margin:0 0 6px;font-size:clamp(36px,6vw,60px);color:#fff}
+.sec h2 i{font-style:normal;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:28px;flex:none;font-family:var(--font-mono);font-weight:700}
+.sec.approvato h2 i{background:var(--ok);color:var(--k)}
+.sec.valutare h2 i{background:var(--li);color:var(--k)}
+.sec.scartato h2 i{background:var(--no);color:#fff}
+.sec .sub{color:var(--mu);margin:0 0 26px;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.item{border-top:1px solid var(--ln);padding-block:30px;display:grid;gap:16px}
+.item h3{margin:0;font-size:clamp(26px,4vw,38px);color:#fff;display:flex;align-items:center;gap:12px}
+.item h3 .st{font-family:var(--font-mono);font-size:20px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none}
+.item.approvato h3 .st{background:var(--ok);color:var(--k)}
+.item.scartato h3 .st{background:var(--no);color:#fff}
+.item.valutare h3 .st{display:none}
+.item .nota{margin:0;color:var(--mu);max-width:640px}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.gal figure{margin:0;background:var(--card);border:1px solid var(--ln);border-radius:8px;overflow:hidden;cursor:zoom-in;transition:border-color .2s,transform .25s;min-width:0}
+.gal figure:hover{border-color:var(--li);transform:translateY(-2px)}
+.gal img{display:block;width:100%;max-width:100%;height:auto}
+.gal figcaption{padding:9px 12px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu)}
+.gal figcaption:empty{display:none}
+.item.scartato .gal figure{opacity:.55}
+.item.scartato .gal figure:hover{opacity:1}
+.vote{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vote button{height:50px;padding:0 20px;border-radius:25px;border:2px solid var(--ln);background:none;cursor:pointer;font:inherit;font-size:15px;font-weight:700;color:var(--h);transition:.2s}
+.vote button:focus-visible{outline:2px solid var(--li);outline-offset:2px}
+.vote .g.on{background:var(--ok);border-color:var(--ok);color:var(--k)}
+.vote .r.on{background:var(--no);border-color:var(--no);color:#fff}
+.vote input{flex:1 0 100%;min-width:0;background:var(--card);border:1px solid var(--ln);color:var(--h);font:inherit;padding:12px 14px;border-radius:6px}
+.vote input:focus{outline:none;border-color:var(--li)}
+.extra{border-top:2px solid var(--li);padding-block:36px 20px;display:grid;gap:12px}
+.extra h3{margin:0;font-size:clamp(26px,4vw,38px);color:#fff}
+.extra textarea{width:100%;max-width:640px;min-height:110px;background:var(--card);border:1px solid var(--ln);color:var(--h);font:inherit;padding:12px;border-radius:6px;resize:vertical}
+main{padding-bottom:130px}
+#send{position:fixed;left:0;right:0;bottom:0;z-index:45;background:rgba(11,11,11,.92);backdrop-filter:blur(14px);border-top:1px solid var(--ln)}
+#send .wrap{padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:space-between;gap:14px}
+#send span{color:var(--mu);font-size:12px;min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:13px 18px;border-radius:6px;cursor:pointer;border:2px solid var(--li);background:var(--li);color:var(--k);text-decoration:none;white-space:nowrap}
+.btn.x{border-color:var(--ln);color:var(--mu);background:none}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#drawer{position:fixed;inset:0;z-index:60}
+#drawer .sh{position:absolute;inset:0;background:rgba(0,0,0,.65)}
+#drawer .pn{position:absolute;right:0;top:0;bottom:0;width:min(460px,100%);background:var(--k);border-left:2px solid var(--li);padding:28px;padding-top:calc(28px + env(safe-area-inset-top,0px));padding-right:max(28px,env(safe-area-inset-right,0px));overflow:auto;display:grid;gap:14px;align-content:start}
+#drawer h3{font-size:40px;margin:0;color:#fff}
+#drawer .sub{color:var(--mu);font-size:12px}
+#drawer .sum{background:var(--card);border:1px solid var(--ln);border-radius:6px;padding:12px;font-size:12px;max-height:40vh;overflow:auto;white-space:pre-wrap;color:#C9C2DE;user-select:all}
+#lb{position:fixed;inset:0;background:rgba(5,5,5,.96);z-index:70;display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+#lb img{max-width:100%;max-height:92vh;border:1px solid var(--ln);border-radius:6px}
+footer{border-top:1px solid var(--ln);padding:26px 16px;text-align:center;color:var(--mu);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+footer b{color:var(--li);font-weight:600}
+@media(max-width:600px){nav .tabs{display:none}header .wrap{padding-block:50px 32px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+<img src="brand_logo_doblecero.png" alt="Doble Cero">
+<span class="mono" style="color:var(--mu)">Rebrand</span>
+<div class="tabs"><a href="#approvato">✓ Approvato</a><a href="#valutare">Da valutare</a><a href="#scartato">✗ Scartato</a></div>
+</div></nav>
+
+<header>
+<div class="bg"></div><div class="fade"></div>
+<div class="wrap">
+<h1 class="nm">Doble<br><span>Cero</span></h1>
+<p>Qui trovi quello che è <b style="color:var(--ok)">approvato</b> e le proposte nuove <b style="color:var(--li)">da valutare</b>. Su queste premi <b>Mi piace</b> o <b>Da rivedere</b>. Alla fine premi <b style="color:var(--li)">Copia il feedback</b> in basso e manda il messaggio a Gabriel.</p>
+</div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<div id="send"><div class="wrap"><span id="fbcount">Nessun voto ancora</span><button class="btn" id="openfb">Copia il feedback →</button></div></div>
+
+<footer>hash house · <b>in doble cero we trust</b></footer>
+
+<div id="drawer" hidden><div class="sh" id="closefb"></div><div class="pn">
+<h3 class="nm">Il tuo feedback</h3>
+<div class="sub">Questo è il messaggio. Copialo e mandalo a Gabriel dove preferisci.</div>
+<div class="sum" id="sum"></div>
+<button class="btn" id="cp">📋 Copia il feedback</button>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><a class="btn x" id="wa" target="_blank" rel="noopener">WhatsApp</a><button class="btn x" id="clr">Ricomincia da zero</button><button class="btn x" id="closefb2">Chiudi</button></div>
+</div></div>
+
+<div id="lb" hidden><img alt=""></div>
+
+<script src="data.js"></script>
+<script>
+const D=window.DATA,$=s=>document.querySelector(s),KEY='dc_fb2';
+let FB={};try{FB=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(FB))}catch(e){}count()};
+const V=D.elementi.filter(x=>x.stato==='valutare');
+function gal(x){return `<div class="gal">${x.immagini.map(i=>`<figure data-src="${i.src}"><img src="${i.src}" alt="${i.didascalia||x.titolo}" loading="lazy"><figcaption>${i.didascalia}</figcaption></figure>`).join('')}</div>`}
+function item(x){const f=FB[x.id]||{};const sym=x.stato==='approvato'?'✓':x.stato==='scartato'?'✗':'';
+ return `<article class="item ${x.stato}" id="i-${x.id}"><h3 class="nm"><span class="st">${sym}</span>${x.titolo}</h3>${x.nota?`<p class="nota">${x.nota}</p>`:''}${gal(x)}${x.stato==='valutare'?`<div class="vote" data-id="${x.id}"><button class="g ${f.v==='ok'?'on':''}" data-v="ok">👍 Mi piace</button><button class="r ${f.v==='no'?'on':''}" data-v="no">👎 Da rivedere</button><input type="text" id="c-${x.id}" placeholder="Vuoi aggiungere qualcosa? (facoltativo)" value="${(f.t||'').replace(/"/g,'&quot;')}"></div>`:''}</article>`}
+const subs={approvato:'Confermato · si può riguardare con calma',valutare:'Proposte nuove · vota quelle che ti convincono',scartato:'Strade provate e lasciate'};
+$('#main').innerHTML=D.sezioni.map(([k,t,s])=>{const L=D.elementi.filter(x=>x.stato===k);if(!L.length)return '';return `<section class="sec ${k}" id="${k}"><h2 class="nm"><i>${s}</i>${t}</h2><p class="sub">${L.length} ${L.length===1?'elemento':'elementi'} · ${subs[k]}</p>${L.map(item).join('')}</section>`}).join('')
+ +`<section class="extra"><h3 class="nm">Altro da dirmi?</h3><textarea id="note" placeholder="Idee, dubbi, cose che vorresti vedere...">${FB.note||''}</textarea></section>`;
+document.addEventListener('click',e=>{
+ const b=e.target.closest('.vote button');if(b){const r=b.closest('.vote'),id=r.dataset.id;FB[id]=FB[id]||{};const was=FB[id].v;r.querySelectorAll('button').forEach(x=>x.classList.remove('on'));if(was===b.dataset.v){FB[id].v=null}else{FB[id].v=b.dataset.v;b.classList.add('on')}save()}
+ const g=e.target.closest('.gal figure');if(g){$('#lb img').src=g.dataset.src;$('#lb').hidden=false}
+ if(e.target.closest('#lb'))$('#lb').hidden=true;
+});
+document.addEventListener('input',e=>{
+ const i=e.target.closest('.vote input');if(i){const id=i.closest('.vote').dataset.id;FB[id]=FB[id]||{};FB[id].t=i.value;save()}
+ if(e.target.id==='note'){FB.note=e.target.value;save()}
+});
+function count(){const n=V.filter(x=>FB[x.id]&&(FB[x.id].v||(FB[x.id].t||'').trim())).length;$('#fbcount').textContent=n?`${n} su ${V.length} valutat${n===1?'o':'i'}`:'Nessun voto ancora'}
+function summary(){let out=`FEEDBACK CLIENTE · ${D.progetto} · ${new Date().toLocaleDateString('it-IT')}\n\n`;let any=false;
+ V.forEach(x=>{const f=FB[x.id]||{};if(!f.v&&!(f.t||'').trim())return;any=true;out+=`${f.v==='ok'?'🟢':f.v==='no'?'🔴':'⚪'} ${x.titolo}${(f.t||'').trim()?' — "'+f.t.trim()+'"':''}\n`});
+ if((FB.note||'').trim()){any=true;out+=`\n✎ Note: ${FB.note.trim()}\n`}
+ if(!any)out+='(nessun voto ancora: vota le proposte "da valutare")\n';return out}
+function refresh(){const s=summary();$('#sum').textContent=s;$('#wa').href='https://wa.me/?text='+encodeURIComponent(s)}
+$('#openfb').onclick=()=>{refresh();$('#drawer').hidden=false};
+const close=()=>{$('#drawer').hidden=true};$('#closefb').onclick=close;$('#closefb2').onclick=close;
+$('#cp').onclick=()=>{const t=summary(),done=()=>{$('#cp').textContent='✓ Copiato! Ora incollalo in un messaggio';setTimeout(()=>$('#cp').textContent='📋 Copia il feedback',2500)},fb=()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove();done()};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done).catch(fb);else fb()};
+$('#clr').onclick=()=>{if($('#clr').dataset.arm){FB={};save();location.reload()}else{$('#clr').dataset.arm='1';$('#clr').textContent='Sicuro? Premi di nuovo';setTimeout(()=>{delete $('#clr').dataset.arm;$('#clr').textContent='Ricomincia da zero'},3000)}};
+addEventListener('keydown',e=>{if(e.key==='Escape'){$('#lb').hidden=true;close()}});
+count();
+</script>
+
+</body>
+</html>
